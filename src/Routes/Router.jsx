@@ -3,7 +3,7 @@ import { RootLayout } from "../layouts/RootLayout.jsx";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import AvailableFoods from "../pages/ManageMyFoods.jsx";
+import AvailableFoods from "../pages/AvailableFoods.jsx";
 import AddFood from "../pages/AddFood";
 import PrivateRoute from "../Routes/PrivateRoute";
 import MyFoodRequests from "../pages/MyFoodRequests.jsx";
