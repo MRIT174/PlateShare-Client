@@ -1,35 +1,40 @@
-import { createBrowserRouter } from "react-router";
-import { RootLayout } from "../layouts/RootLayout";
+import { createBrowserRouter } from "react-router-dom";
+import { RootLayout } from "../layouts/RootLayout.jsx";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AvailableFoods from "../pages/AvailableFoods";
+import AddFood from "../pages/AddFood";
+import PrivateRoute from "../Routes/PrivateRoute";
 
 const router = createBrowserRouter([
-   {
+  {
     path: "/",
-    Component: RootLayout,
+    element: <RootLayout />,
     children: [
       {
         index: true,
-        path: "/",
-        Component: Home
+        element: <Home />,
       },
       {
-        path: "/Login",
-        Component: Login
+        path: "Login",
+        element: <Login />,
       },
       {
-        path: "/Register",
-        Component: Register
+        path: "Register",
+        element: <Register />,
       },
       {
-        path: "/AvailableFoods",
-        Component: AvailableFoods
+        path: "AvailableFoods",
+        element: <AvailableFoods />,
       },
       {
-        path: "/AvailableFoods",
-        Component: AvailableFoods
+        path: "AddFood",
+        element: (
+          <PrivateRoute>
+            <AddFood />
+          </PrivateRoute>
+        ),
       },
     ],
   },

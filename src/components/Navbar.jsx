@@ -120,7 +120,7 @@ const Navbar = () => {
               <ul className="absolute right-0 mt-3 w-52 bg-base-100 border border-gray-200 rounded-xl shadow-lg z-9999">
                 <li>
                   <Link
-                    to="/add-food"
+                    to="/AddFood"
                     className="block px-4 py-2 hover:bg-gray-100"
                     onClick={() => setIsDropdownOpen(false)}
                   >
