@@ -129,7 +129,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
-                    to="/manage-foods"
+                    to="/ManageMyFoods"
                     className="block px-4 py-2 hover:bg-gray-100"
                     onClick={() => setIsDropdownOpen(false)}
                   >

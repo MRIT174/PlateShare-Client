@@ -3,10 +3,11 @@ import { RootLayout } from "../layouts/RootLayout.jsx";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import AvailableFoods from "../pages/AvailableFoods";
+import AvailableFoods from "../pages/ManageMyFoods.jsx";
 import AddFood from "../pages/AddFood";
 import PrivateRoute from "../Routes/PrivateRoute";
 import MyFoodRequests from "../pages/MyFoodRequests.jsx";
+import ManageMyFoods from "../pages/ManageMyFoods.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyFoodRequests />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "ManageMyFoods",
+        element: (
+          <PrivateRoute>
+            <ManageMyFoods />
           </PrivateRoute>
         ),
       },
