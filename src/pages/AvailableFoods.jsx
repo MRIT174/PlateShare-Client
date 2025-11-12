@@ -12,12 +12,12 @@ const AvailableFoods = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("✅ Loaded Foods:", data);
+        console.log("Loaded Foods:", data);
         setFoods(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("❌ Error fetching foods:", err);
+        console.error("Error fetching foods:", err);
         setLoading(false);
       });
   }, []);
@@ -33,7 +33,7 @@ const AvailableFoods = () => {
   if (foods.length === 0) {
     return (
       <div className="text-center py-20 text-lg font-semibold text-gray-500">
-        ❗No food data available yet.
+      No food data available yet.
       </div>
     );
   }
@@ -41,7 +41,7 @@ const AvailableFoods = () => {
   return (
     <section className="py-10 px-5 lg:px-16">
       <h2 className="text-3xl font-bold text-center mb-8 text-primary">
-        🍱 Available Foods ({foods.length})
+        Available Foods ({foods.length})
       </h2>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -66,10 +66,10 @@ const AvailableFoods = () => {
                 {food.foodQuantity || "Quantity not mentioned"}
               </p>
               <p className="text-sm text-gray-500">
-                Pickup: {food.pickup_location || "Not provided"}
+                Pickup: {food.pickupLocation || "Not provided"}
               </p>
               <p className="text-sm text-gray-500">
-                Expire Date: {food.expire_date || "N/A"}
+                Expire Date: {food.expireDate || "N/A"}
               </p>
 
               <div className="card-actions justify-end mt-4">

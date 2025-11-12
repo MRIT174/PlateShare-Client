@@ -1,15 +1,15 @@
-import React from 'react'
-import Header from '../components/Header.jsx'
-import AvailableFoods from './AvailableFoods.jsx'
+import React from "react";
+import Header from "../components/Header.jsx";
+import FilterSixItem from "../components/FilterSixItem.jsx";
 
 
 const Home = () => {
   return (
     <>
-    <Header></Header>
-    <AvailableFoods></AvailableFoods>
+      <Header></Header>
+      <FilterSixItem></FilterSixItem>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
