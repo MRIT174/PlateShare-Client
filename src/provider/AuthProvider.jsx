@@ -9,9 +9,10 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  getIdToken,
 } from "firebase/auth";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
@@ -40,14 +41,28 @@ const AuthProvider = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    localStorage.removeItem("token");
     return signOut(auth);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const token = await getIdToken(currentUser, true);
+          localStorage.setItem("token", token);
+          setUser({ ...currentUser, accessToken: token });
+        } catch (err) {
+          console.error("Error getting token:", err);
+          setUser(currentUser);
+        }
+      } else {
+        setUser(null);
+        localStorage.removeItem("token");
+      }
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 

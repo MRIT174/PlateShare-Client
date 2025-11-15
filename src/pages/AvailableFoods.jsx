@@ -74,7 +74,7 @@ const AvailableFoods = () => {
 
               <div className="card-actions justify-end mt-4">
                 <Link
-                  to={`/foods/${food._id}`}
+                  to={`/FoodDetails/${food._id}`}
                   className="btn btn-sm bg-primary text-white hover:bg-primary/90"
                 >
                   View Details

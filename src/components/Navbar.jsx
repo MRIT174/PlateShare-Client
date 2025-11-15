@@ -137,15 +137,6 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/MyFoodRequests"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    My Food Requests
-                  </Link>
-                </li>
-                <li>
                   <button
                     onClick={handleLogout}
                     className="btn w-full text-left px-4 py-2 text-error hover:bg-gray-100"

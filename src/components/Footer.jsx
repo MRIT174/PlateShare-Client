@@ -16,7 +16,7 @@ const Footer = () => {
           <div>
             <span className="footer-title text-white">Contact Info</span>
             <a className="link link-hover text-gray-300">
-              Email: warm@warmpaws.xyz
+              Email: PlateShare@PlateShare.xyz
             </a>
             <a className="text-gray-300">Phone: +880 1700000000</a>
             <a className="text-gray-300">
