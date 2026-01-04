@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-slate-900 py-10">
-        <div className="w-11/12 mx-auto footer flex flex-col md:flex-row justify-between">
+        <div className="w-11/12 mx-auto footer flex flex-col md:flex-row justify-between container-main">
           <div>
             <h2 className="font-bold text-lg text-white">PlateShare</h2>
             <p className="text-gray-300">

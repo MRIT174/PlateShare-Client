@@ -5,21 +5,22 @@ import { AuthContext } from "../provider/AuthProvider.jsx";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logOut();
-      setIsDropdownOpen(false);
-      alert("You have logged out successfully!");
+      alert("Logged out successfully!");
       navigate("/login");
     } catch (error) {
-      console.error("Logout Error:", error);
-      alert("Logout failed. Please try again.");
+      console.error(error);
+      alert("Logout failed");
     }
   };
 
+  // Close dropdown if click outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,9 +28,7 @@ const Navbar = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const navLinks = (
@@ -40,6 +39,7 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : "hover:text-primary"
           }
+          onClick={() => setIsSideMenuOpen(false)}
         >
           Home
         </NavLink>
@@ -50,8 +50,31 @@ const Navbar = () => {
           className={({ isActive }) =>
             isActive ? "text-primary font-semibold" : "hover:text-primary"
           }
+          onClick={() => setIsSideMenuOpen(false)}
         >
           Available Foods
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/About"
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : "hover:text-primary"
+          }
+          onClick={() => setIsSideMenuOpen(false)}
+        >
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/Contact"
+          className={({ isActive }) =>
+            isActive ? "text-primary font-semibold" : "hover:text-primary"
+          }
+          onClick={() => setIsSideMenuOpen(false)}
+        >
+          Contact
         </NavLink>
       </li>
     </>
@@ -59,44 +82,44 @@ const Navbar = () => {
 
   return (
     <nav className="navbar bg-base-100 border-b border-gray-200 sticky top-0 z-50 px-5 lg:px-10">
+      {/* Navbar Start */}
       <div className="navbar-start">
-        <div className="dropdown">
-          <button tabIndex={0} className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 mt-3 p-2 shadow rounded-box w-52 z-50"
+        {/* Mobile Hamburger */}
+        <button
+          className="btn btn-ghost lg:hidden"
+          onClick={() => setIsSideMenuOpen(true)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            {navLinks}
-          </ul>
-        </div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
 
         <Link to="/" className="text-2xl font-bold text-primary">
           PlateShare
         </Link>
       </div>
 
+      {/* Navbar Center (Desktop) */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
 
+      {/* Navbar End */}
       <div className="navbar-end space-x-3 relative" ref={dropdownRef}>
         {user ? (
           <div className="relative">
+            {/* Profile Image */}
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="focus:outline-none"
@@ -116,30 +139,24 @@ const Navbar = () => {
               )}
             </button>
 
+            {/* Dropdown */}
             {isDropdownOpen && (
-              <ul className="absolute right-0 mt-3 w-52 bg-base-100 border border-gray-200 rounded-xl shadow-lg z-9999">
+              <ul className="absolute right-0 mt-3 w-52 bg-base-100 border border-gray-200 rounded-xl shadow-lg z-50">
                 <li>
-                  <Link
-                    to="/AddFood"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setIsDropdownOpen(false)}
+                  <button
+                    onClick={() => {
+                      navigate("/dashboard");
+                      setIsDropdownOpen(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                   >
-                    Add Food
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/ManageMyFoods"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    Manage My Foods
-                  </Link>
+                    Dashboard
+                  </button>
                 </li>
                 <li>
                   <button
                     onClick={handleLogout}
-                    className="btn w-full text-left px-4 py-2 text-error hover:bg-gray-100"
+                    className="block w-full text-left px-4 py-2 text-error hover:bg-gray-100"
                   >
                     Logout
                   </button>
@@ -163,6 +180,50 @@ const Navbar = () => {
             </Link>
           </>
         )}
+      </div>
+
+      {/* Mobile Side Menu */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-base-100 shadow-lg z-50 transform ${
+          isSideMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300`}
+      >
+        <div className="flex justify-between items-center p-4 border-b border-gray-200">
+          <Link
+            to="/"
+            className="text-2xl font-bold text-primary"
+            onClick={() => setIsSideMenuOpen(false)}
+          >
+            PlateShare
+          </Link>
+          <button
+            className="btn btn-ghost"
+            onClick={() => setIsSideMenuOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
+        <ul className="menu p-4 space-y-3">{navLinks}</ul>
+        {user ? (
+          <div className="p-4 border-t border-gray-200">
+            <Link
+              to="/dashboard"
+              className="block px-4 py-2 hover:bg-gray-100 rounded"
+              onClick={() => setIsSideMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsSideMenuOpen(false);
+              }}
+              className="btn w-full mt-3 bg-error text-white hover:bg-error/90"
+            >
+              Logout
+            </button>
+          </div>
+        ) : null}
       </div>
     </nav>
   );

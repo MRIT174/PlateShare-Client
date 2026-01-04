@@ -1,14 +1,18 @@
 import React from "react";
-import { Outlet } from "react-router";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar.jsx"; // your navbar
+import Footer from "../components/Footer.jsx"; // optional footer
 
-export const RootLayout = () => {
+const RootLayout = () => {
   return (
-    <>
-      <Navbar></Navbar>
-      <Outlet />
-      <Footer></Footer>
-    </>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-1">
+        <Outlet /> {/* This renders child routes */}
+      </main>
+      <Footer />
+    </div>
   );
 };
+
+export default RootLayout; // ✅ default export

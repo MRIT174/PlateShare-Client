@@ -6,13 +6,12 @@ const AvailableFoods = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/foods")
+    fetch("https://plate-share-server-pearl.vercel.app/foods")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch foods");
         return res.json();
       })
       .then((data) => {
-        console.log("Loaded Foods:", data);
         setFoods(data);
         setLoading(false);
       })
@@ -33,53 +32,56 @@ const AvailableFoods = () => {
   if (foods.length === 0) {
     return (
       <div className="text-center py-20 text-lg font-semibold text-gray-500">
-      No food data available yet.
+        No food data available yet.
       </div>
     );
   }
 
   return (
-    <section className="py-10 px-5 lg:px-16">
-      <h2 className="text-3xl font-bold text-center mb-8 text-primary">
+    <section className="py-12 px-4 sm:px-6 lg:px-16 bg-base-200">
+      <h2 className="text-3xl sm:text-4xl font-bold text-center mb-10 text-primary">
         Available Foods ({foods.length})
       </h2>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ✅ Mobile 2 cards, tablet 3, desktop 5 */}
+      <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {foods.map((food) => (
           <div
             key={food._id}
-            className="card bg-base-100 shadow-xl border border-gray-100 hover:shadow-2xl transition"
+            className="group bg-base-100 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-shadow duration-300 flex flex-col"
           >
-            <figure>
+            <div className="relative">
               <img
                 src={food.foodImage || "https://via.placeholder.com/400x250?text=No+Image"}
-                alt={food.foodName || "No Name"}
-                className="w-full h-48 object-cover"
+                alt={food.foodName || "Unnamed Food"}
+                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-            </figure>
+              <span className="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded-lg shadow-lg">
+                {food.status === "donated" ? "Donated" : "Available"}
+              </span>
+            </div>
 
-            <div className="card-body">
-              <h3 className="text-xl font-semibold">
+            <div className="p-3 sm:p-4 flex flex-col flex-grow">
+              <h3 className="text-lg sm:text-xl font-semibold mb-1 line-clamp-1">
                 {food.foodName || "Unnamed Food"}
               </h3>
-              <p className="text-gray-600">
-                {food.foodQuantity || "Quantity not mentioned"}
+
+              <p className="text-sm text-gray-600 mb-1">
+                Qty: {food.foodQuantity || "N/A"}
               </p>
-              <p className="text-sm text-gray-500">
-                Pickup: {food.pickupLocation || "Not provided"}
+              <p className="text-sm text-gray-500 mb-1">
+                Pickup: {food.pickupLocation || "N/A"}
               </p>
-              <p className="text-sm text-gray-500">
-                Expire Date: {food.expireDate || "N/A"}
+              <p className="text-xs text-gray-400 mb-3 sm:mb-4">
+                Expires: {food.expireDate ? new Date(food.expireDate).toLocaleDateString() : "N/A"}
               </p>
 
-              <div className="card-actions justify-end mt-4">
-                <Link
-                  to={`/FoodDetails/${food._id}`}
-                  className="btn btn-sm bg-primary text-white hover:bg-primary/90"
-                >
-                  View Details
-                </Link>
-              </div>
+              <Link
+                to={`/FoodDetails/${food._id}`}
+                className="btn btn-sm bg-primary text-white mt-auto hover:bg-primary/90 w-full"
+              >
+                View Details
+              </Link>
             </div>
           </div>
         ))}

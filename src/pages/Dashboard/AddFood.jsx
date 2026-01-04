@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../provider/AuthProvider";
+import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const AddFood = () => {

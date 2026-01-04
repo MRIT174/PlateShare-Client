@@ -7,7 +7,7 @@ const MyFoodRequests = ({ foodId }) => {
   const loadRequests = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/requests?foodId=${foodId}`
+        `https://plate-share-server-pearl.vercel.app/requests?foodId=${foodId}`
       );
       setRequests(res.data || []);
     } catch (error) {
@@ -21,7 +21,7 @@ const MyFoodRequests = ({ foodId }) => {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.patch(`http://localhost:5000/requests/${id}`, { status });
+      await axios.patch(`https://plate-share-server-pearl.vercel.app/requests/${id}`, { status });
       loadRequests();
     } catch (error) {
       console.error("Failed to update status:", error);

@@ -16,7 +16,7 @@ const ManageMyFoods = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/foods`)
+      fetch(`https://plate-share-server-pearl.vercel.app/foods`)
         .then((res) => res.json())
         .then((data) => {
           const mine = data.filter((f) => f.donatorEmail === user.email);
@@ -43,11 +43,14 @@ const ManageMyFoods = () => {
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`http://localhost:5000/foods/${editingFood._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
+    fetch(
+      `https://plate-share-server-pearl.vercel.app/foods/${editingFood._id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         Swal.fire("Updated!", "Food updated successfully!", "success");
@@ -71,7 +74,7 @@ const ManageMyFoods = () => {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/foods/${id}`, {
+        fetch(`https://plate-share-server-pearl.vercel.app/foods/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

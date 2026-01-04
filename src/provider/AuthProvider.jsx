@@ -35,8 +35,12 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-  const updateUser = (updatedData) => {
-    return updateProfile(auth.currentUser, updatedData);
+  // ✅ Updated function for Profile page
+  const updateUserProfile = async (updatedData) => {
+    if (!auth.currentUser) throw new Error("No user logged in");
+    await updateProfile(auth.currentUser, updatedData);
+    // Update user state immediately
+    setUser({ ...auth.currentUser });
   };
 
   const logOut = () => {
@@ -75,14 +79,10 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     loading,
     setLoading,
-    updateUser,
+    updateUserProfile, // ✅ make it available in context
   };
 
-  return (
-    <AuthContext.Provider value={authData}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
